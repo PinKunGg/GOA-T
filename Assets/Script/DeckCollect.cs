@@ -9,13 +9,13 @@ public class DeckCollect : MonoBehaviour
     public List<string> Deck;
     public List<string> DeckStorage;
     public Text CardCount;
-    string DeckPath = "C:/Users/PinKunGg/Desktop/Deck.txt";
+    string DeckPath = Application.streamingAssetsPath + "/Deck.txt";
     string card = "";
     StreamReader reader;
 
     void Start()
     {
-        //AddDeckList();
+        AddDeckList();
     }
 
     void Update()
