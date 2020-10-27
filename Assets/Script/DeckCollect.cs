@@ -9,6 +9,10 @@ public class DeckCollect : MonoBehaviour
     public List<string> Deck;
     public List<string> DeckStorage;
     public Text CardCount;
+    public Text CardHand;
+    public float DeckAmount;
+    public int HandCard;
+
     string DeckPath = Application.streamingAssetsPath + "/Deck.txt";
     string card = "";
     StreamReader reader;
@@ -16,11 +20,33 @@ public class DeckCollect : MonoBehaviour
     void Start()
     {
         AddDeckList();
+        StartDuel();
+        NewCard();
     }
-
+    void StartDuel()
+    {
+        for (int i = 1; i <= 30; i++)
+        {
+            addCard();
+        }
+    }
+    public void NewCard()
+    {
+        for(int i = HandCard; HandCard < 5;)
+        {
+            removeCard();
+            HandCard ++;
+        }
+    }
+    public void RemoveCardInHand()
+    {
+        HandCard--;
+    }
     void Update()
     {
-        CardCount.text = "Card in Deck = " + Deck.Count;
+        CardCount.text = "" + Deck.Count;
+        CardHand.text = "" + HandCard;
+        DeckAmount = Deck.Count;
     }
 
     void AddDeckList()
@@ -38,7 +64,7 @@ public class DeckCollect : MonoBehaviour
     }
     public void addCard()
     {
-        float rand = Random.Range(1, 5);
+        float rand = Random.Range(1, 6);
         switch (rand)
         {
             case 1:

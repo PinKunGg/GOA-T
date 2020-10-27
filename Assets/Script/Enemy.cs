@@ -5,16 +5,24 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    float speed;
+    float speed = 3f;
 
     Transform target;
     int waypointIndex = 0;
 
+    float EnemyHp = 5f;
+
+    static float num = 0f;
+
     void Start()
     {
-        Debug.Log("EnemyScript - Active");
-
         target = Waypoint.point[0];
+    }
+
+    private void OnEnable()
+    {
+        num++;
+        this.gameObject.name = "Enemy_" + num;
     }
 
     void Update()
@@ -26,6 +34,11 @@ public class Enemy : MonoBehaviour
         if(Vector3.Distance(transform.position, target.position) <= 0.2f)
         {
             GetNextWayPoint();
+        }
+
+        if(EnemyHp <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -39,5 +52,13 @@ public class Enemy : MonoBehaviour
 
         waypointIndex++;
         target = Waypoint.point[waypointIndex];
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "PBullet")
+        {
+            EnemyHp -= 1f;
+        }
     }
 }

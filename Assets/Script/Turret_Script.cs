@@ -41,7 +41,6 @@ public class Turret_Script : MonoBehaviour
         if (nearEenmy != null && shotDistance <= detectRange)
         {
             target = nearEenmy.transform;
-            Debug.Log("Target Found! , Target = " + target.name);
         }
         else
         {
@@ -59,7 +58,7 @@ public class Turret_Script : MonoBehaviour
         //Look At Target
         Vector3 Face2Target = target.position - transform.position;
         Quaternion Way2Rotate = Quaternion.LookRotation(Face2Target);
-        Vector3 JustRotate = Quaternion.Lerp(RotatePart.rotation, Way2Rotate, Time.deltaTime * 30f).eulerAngles;
+        Vector3 JustRotate = Quaternion.Lerp(RotatePart.rotation, Way2Rotate, Time.deltaTime * 10f).eulerAngles;
         RotatePart.rotation = Quaternion.Euler(JustRotate.x, JustRotate.y, 0f);
 
         if (FireCountDown <= 0f)

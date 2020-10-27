@@ -8,6 +8,8 @@ TagManager:
   - EnemySpawner
   - Enemy
   - Turret
+  - PBullet
+  - PDoubleBullet
   layers:
   - Default
   - TransparentFX

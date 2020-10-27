@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scene/MainMenu.unity
     guid: 1b1018f0731be914391f5807cd492c4c
   - enabled: 1
+    path: Assets/Scene/StageSelect.unity
+    guid: 520d9308d930a4f438add7cfffed5603
+  - enabled: 1
+    path: Assets/Scene/PlayTest_Demo.unity
+    guid: 53b88c4b4392fb448a26d211419757b1
+  - enabled: 1
+    path: Assets/Scene/PlayEndlessTest_Demo.unity
+    guid: 6b94c6f220bdb2e4b83ae9898c5222f8
+  - enabled: 0
     path: Assets/Scene/Demo.unity
     guid: 9af722c5c7ad9f84b81c66690cd47541
   m_configObjects: {}

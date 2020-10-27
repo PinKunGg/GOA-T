@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 827020523013340235}
   m_Layer: 0
   m_Name: PDoubleBullet
-  m_TagString: Untagged
+  m_TagString: PBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

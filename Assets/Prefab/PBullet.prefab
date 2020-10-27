@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 918830488014834133}
   m_Layer: 0
   m_Name: PBullet
-  m_TagString: Untagged
+  m_TagString: PBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c0564959e9d3c42afa97af08d0b981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  FireFX: {fileID: 0}
 --- !u!54 &918830488014834133
 Rigidbody:
   m_ObjectHideFlags: 0
