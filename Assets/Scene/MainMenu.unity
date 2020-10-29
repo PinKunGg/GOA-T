@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8878a9cc9e7868e48808c03141e9c227,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6327,7 +6327,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906331844}
-  m_LocalRotation: {x: 0.061801482, y: 0.09618208, z: -0.005983491, w: 0.9934253}
+  m_LocalRotation: {x: 0.06180148, y: 0.09618204, z: -0.0059834886, w: 0.9934253}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11753,7 +11753,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579699738}
-  m_LocalRotation: {x: 0.054590657, y: 0.09622299, z: -0.005285393, w: 0.99384767}
+  m_LocalRotation: {x: 0.054590654, y: 0.096222945, z: -0.00528539, w: 0.99384767}
   m_LocalPosition: {x: -1.9341753, y: 1.6337142, z: -9.895021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -12092,7 +12092,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724413816}
-  m_LocalRotation: {x: 0.079861134, y: 0.09605733, z: -0.0077320836, w: 0.99213684}
+  m_LocalRotation: {x: 0.07986116, y: 0.096057296, z: -0.0077320826, w: 0.99213684}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12260,8 +12260,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2099799827}
-  - component: {fileID: 2099799828}
   - component: {fileID: 2099799829}
+  - component: {fileID: 2099799828}
   m_Layer: 0
   m_Name: GM_MENU
   m_TagString: Untagged
@@ -12292,7 +12292,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2099799826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb5a1eb4cd2ba254f97ed89cbded7f7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 43ef3abaa2064704ca66784ff9f92617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CF: {fileID: 770823965}
