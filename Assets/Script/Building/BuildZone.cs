@@ -48,7 +48,8 @@ public class BuildZone : MonoBehaviour
         else if (s_DC.InHandCard != 0 && s_GM.b_PlaneTurn == true) //Check it is in PlaneTurn of have any card left
         {
             bool isBuild = BuildManager.instance.GetIsBuild();
-            if(isBuild == false)
+            bool isPause = BuildManager.instance.GetIsPause();
+            if(isBuild == false && isPause == false)
             {
                 BuildManager.instance.isBuild = true;
                 int CardIndex = BuildManager.instance.GetCardIndex();
@@ -57,11 +58,15 @@ public class BuildZone : MonoBehaviour
                 g_cannon = (GameObject)Instantiate(cannonToBuild, transform.position + v3_CannonOffSet, transform.rotation);
                 s_CardInHand.RemoveSpawnCard();
             }
-            else
+            else if(isBuild == true && isPause == false)
             {
                 txt_SystemText.text = "Please select a card!";
                 txt_SystemText_S.text = "Please select a card!";
                 Invoke("ResetSystemTxt", 4f);
+            }
+            else
+            {
+
             }
         }
         else if (s_GM.b_PlayTurn == true) //When it in PlaneTurn can't build
@@ -80,7 +85,15 @@ public class BuildZone : MonoBehaviour
     }
     private void OnMouseEnter() //Chance Color when mouse on that BuildZone
     {
-        render_rend.material.color = color_HoverColor;
+        bool isPause = BuildManager.instance.GetIsPause();
+        if(isPause == true)
+        {
+
+        }
+        else
+        {
+            render_rend.material.color = color_HoverColor;
+        }
     }
 
     private void OnMouseExit() //Chance Color when mouse not on that BuildZone

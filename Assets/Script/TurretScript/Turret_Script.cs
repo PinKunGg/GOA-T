@@ -10,6 +10,7 @@ public class Turret_Script : MonoBehaviour
 
     [Header("Fire & Detect_Range Custom")]
     public float detectRange = 3f;
+    public float TurretRotSpeed = 10f;
     public float FireRate = 1f;
     private float FireCountDown = 0f;
 
@@ -58,7 +59,7 @@ public class Turret_Script : MonoBehaviour
         //Look At Target
         Vector3 Face2Target = trans_target.position - transform.position;
         Quaternion Way2Rotate = Quaternion.LookRotation(Face2Target);
-        Vector3 JustRotate = Quaternion.Lerp(trans_RotatePart.rotation, Way2Rotate, Time.deltaTime * 10f).eulerAngles;
+        Vector3 JustRotate = Quaternion.Lerp(trans_RotatePart.rotation, Way2Rotate, Time.deltaTime * TurretRotSpeed).eulerAngles;
         trans_RotatePart.rotation = Quaternion.Euler(JustRotate.x, JustRotate.y, 0f);
 
         if (FireCountDown <= 0f)

@@ -7,7 +7,7 @@ public class PBullet : MonoBehaviour
     Rigidbody rb;
     Vector3 SpawnPos;
 
-    float speed = 10f;
+    float speed = 20f;
     float bulletFlyDistance = 20f;
 
     public GameObject FireFX;
@@ -17,8 +17,8 @@ public class PBullet : MonoBehaviour
         SpawnPos = this.transform.position;
         rb = this.GetComponent<Rigidbody>();
 
-        GameObject effectIns = (GameObject)Instantiate(FireFX, transform.position, transform.rotation);
-        Destroy(effectIns, 1.5f);
+        //GameObject effectIns = (GameObject)Instantiate(FireFX, transform.position, transform.rotation);
+        //Destroy(effectIns, 1.5f);
     }
 
     void Update()
@@ -33,6 +33,9 @@ public class PBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        if(other.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

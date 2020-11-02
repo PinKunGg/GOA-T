@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CardInHand : MonoBehaviour
 {
-    public List<GameObject> cardScripts = new List<GameObject>(5);
+    public List<GameObject> CardScripts = new List<GameObject>(5);
     public List<GameObject> CardSpawnPos;
     public int indexSpawnPos;
     public int CardIndex;
@@ -22,19 +22,19 @@ public class CardInHand : MonoBehaviour
         card.transform.parent = CardSpawnPos[indexSpawnPos].transform;
         card.GetComponent<CardScript>().CardIndex = this.CardIndex;
         card.GetComponent<CardScript>().PosIndex = this.indexSpawnPos;
-        cardScripts[indexSpawnPos] = card;
+        CardScripts[indexSpawnPos] = card;
         DeckCollect.InHandCard++;
         DeckCollect.L_Deck.Remove(DeckCollect.L_Deck[indexSpawnPos]);
     }
     public void DrawNewCard()
     {
-        if(cardScripts[indexSpawnPos] == null)
+        if(CardScripts[indexSpawnPos] == null)
         {
             GameObject card = Instantiate(CardPrefab,CardSpawnPos[indexSpawnPos].transform.position,CardSpawnPos[indexSpawnPos].transform.rotation);
             card.transform.parent = CardSpawnPos[indexSpawnPos].transform;
             card.GetComponent<CardScript>().CardIndex = this.CardIndex;
             card.GetComponent<CardScript>().PosIndex = this.indexSpawnPos;
-            cardScripts[indexSpawnPos] = card;
+            CardScripts[indexSpawnPos] = card;
             DeckCollect.InHandCard++;
             DeckCollect.L_Deck.Remove(DeckCollect.L_Deck[indexSpawnPos]);
         }
@@ -47,7 +47,7 @@ public class CardInHand : MonoBehaviour
     {
         indexSpawnPos = 0;
         DeckCollect.InHandCard--;
-        Destroy(cardScripts[CardSelectIndex].gameObject);
-        cardScripts[CardSelectIndex] = null;
+        Destroy(CardScripts[CardSelectIndex].gameObject);
+        CardScripts[CardSelectIndex] = null;
     }
 }

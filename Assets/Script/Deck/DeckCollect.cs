@@ -15,6 +15,8 @@ public class DeckCollect : MonoBehaviour
     private void Awake()
     {
         cardInHand = GetComponent<CardInHand>();
+        L_Deck.Clear();
+        L_DeckStorage.Clear();
     }
     void Start()
     {

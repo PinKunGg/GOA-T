@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MenuButton : MonoBehaviour
 {
+    public GM s_GM;
+    int CurrentScene;
+    private void Start()
+    {
+        CurrentScene = SceneManager.GetActiveScene().buildIndex;    
+    }
     public void MainMenu_Button()
     {
         SceneManager.LoadScene(0);
@@ -28,5 +34,14 @@ public class MenuButton : MonoBehaviour
     public void StageSelect_Endless()
     {
         SceneManager.LoadScene(3);
+    }
+    public void ResumeButton()
+    {
+        Time.timeScale = 1f;
+        s_GM.b_isEsc = false;
+    }
+    public void RetryButton()
+    {
+        SceneManager.LoadSceneAsync(CurrentScene);
     }
 }

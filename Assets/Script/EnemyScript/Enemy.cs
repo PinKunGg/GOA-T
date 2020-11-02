@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     float f_enemySpeed = 3f;
+    public Slider EnemyHp;
 
     Transform trans_target; //Waypoint to go
     int i_waypointIndex = 0;
-    float f_EnemyHp = 5f;
     static float f_index = 0f; //idex of Enemy Prefab (when Debug)
-
     void Start() //Set WayPoint to 0
     {
+        print("Ground Hp = " +EnemyHp.value);
         trans_target = Waypoint.point[0];
     }
 
@@ -21,12 +22,12 @@ public class Enemy : MonoBehaviour
     {
         f_index++;
         this.gameObject.name = "Enemy_" + f_index;
-        GameMode_Controller.L_EnemyPrefabSpawn.Add(this);
+        GameMode_Controller.L_EnemyPrefabSpawn.Add(this.gameObject);
     }
 
     private void OnDestroy() //Remove themself in GameMode_Controller List when Destroy
     {
-        GameMode_Controller.L_EnemyPrefabSpawn.Remove(this);
+        GameMode_Controller.L_EnemyPrefabSpawn.Remove(this.gameObject);
     }
 
     void Update()
@@ -40,7 +41,7 @@ public class Enemy : MonoBehaviour
             GetNextWayPoint();
         }
 
-        if(f_EnemyHp <= 0) //when Hp = 0 Destroy
+        if(EnemyHp.value <= 0) //when Hp = 0 Destroy
         {
             Destroy(gameObject);
         }
@@ -50,7 +51,7 @@ public class Enemy : MonoBehaviour
     {
         if(i_waypointIndex >= Waypoint.point.Length - 1) //Check if there are any WayPoint left to go, if not Destroy themself
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
             return;
         }
 
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour
     {
         if(other.gameObject.tag == "PBullet")
         {
-            f_EnemyHp -= 1f;
+            EnemyHp.value -= 10f * Time.deltaTime;
         }
     }
 }

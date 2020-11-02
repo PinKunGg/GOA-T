@@ -9,7 +9,7 @@ public class BuildManager : MonoBehaviour
     public Card_ScriptAbleObject[] CardTurretList;
     GameObject cannonToBuild;
     public int CardIndex;
-    public bool isBuild;
+    public bool isBuild = true, isPause;
 
     public GameObject GetCannonToBuild() //Return Build cannon
     {
@@ -22,6 +22,10 @@ public class BuildManager : MonoBehaviour
     public bool GetIsBuild()
     {
         return isBuild;
+    }
+    public bool GetIsPause()
+    {
+        return isPause;
     }
     private void Awake() //Make this script can have only one on Scene
     {
