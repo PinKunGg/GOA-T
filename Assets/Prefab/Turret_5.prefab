@@ -752,8 +752,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trans_RotatePart: {fileID: 4672211115284454181}
   trans_bulletSpawn: {fileID: 9028216281846517507}
-  detectRange: 4
-  FireRate: 5
+  card_ScriptAbleObject: {fileID: 11400000, guid: 0df17d2789ee0f747bce488ed50a9670,
+    type: 2}
+  detectRange: 0
+  TurretRotSpeed: 0
+  FireRate: 0
+  Damage: 0
   g_bulletPrefab: {fileID: 5654168721275075130, guid: e9692dca9f1e65145a3a1d3eb11709b5,
     type: 3}
 --- !u!1 &5910253979403563720

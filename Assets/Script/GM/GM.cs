@@ -7,10 +7,10 @@ public class GM : MonoBehaviour
 {
     public GameObject cam_PlaneStageCam, cam_PlayStageCam, cav_PlaneUI, cav_PlayUI, PauseUI, MainUI, WinUI, LoseUI;
     public GameMode_Controller s_GM_Con;
-    public Text BaseHp, BaseHp1;
+    public Text BaseHp, Cost;
     public BuildManager buildManager;
     public bool b_PlaneTurn, b_PlayTurn, b_isEsc, b_isWin, b_isLose;
-    public float CurrentHp, FullHp;
+    public float CurrentHp, FullHp, BaseCost, FixCost = 30f;
 
     private void Awake() //GetComponent
     {
@@ -19,8 +19,9 @@ public class GM : MonoBehaviour
     private void Start() //Start Camera In Plane Camera Position
     {
         b_PlaneTurn = true;
+        BaseCost = FixCost;
         BaseHp.text = CurrentHp + " / " + FullHp;
-        BaseHp1.text = CurrentHp + " / " + FullHp;
+        Cost.text = BaseCost.ToString();
         WinUI.SetActive(false);
         LoseUI.SetActive(false);
     }
@@ -33,6 +34,11 @@ public class GM : MonoBehaviour
     }
     private void Update()
     {
+        if(BaseCost <= 0)
+        {            
+            BaseCost = 0f;
+            Cost.text = BaseCost.ToString();
+        }
         if(CurrentHp <= 0 )
         {
             b_isLose = true;
@@ -95,6 +101,13 @@ public class GM : MonoBehaviour
     public void BaseHpCal()
     {
         BaseHp.text = (CurrentHp -= 1f) + " / " + FullHp;
-        BaseHp1.text = CurrentHp + " / " + FullHp;
+    }
+    public void CostRegen(float value)
+    {
+        Cost.text = Mathf.Abs(BaseCost += value).ToString();
+    }
+    public void CostCal(float value)
+    {
+        Cost.text = Mathf.Abs(BaseCost -= value).ToString();
     }
 }

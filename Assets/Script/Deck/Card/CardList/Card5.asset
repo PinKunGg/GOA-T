@@ -15,3 +15,9 @@ MonoBehaviour:
   Name: Card5
   CardIndex: 5
   Turret: {fileID: 5711342682829126257, guid: 1869308a96aa361468f6ac7b154eeb20, type: 3}
+  TurretName: Turret 5
+  DetecRange: 4
+  Damage: 5
+  RotateSpeed: 15
+  FireRate: 5
+  Cost: 13

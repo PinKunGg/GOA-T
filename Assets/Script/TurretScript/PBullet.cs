@@ -11,6 +11,7 @@ public class PBullet : MonoBehaviour
     float bulletFlyDistance = 20f;
 
     public GameObject FireFX;
+    public float Damage;
 
     void Start()
     {
@@ -35,6 +36,24 @@ public class PBullet : MonoBehaviour
     {
         if(other.CompareTag("Enemy"))
         {
+            try
+            {
+                other.GetComponent<Enemy>().HpCal(Damage);
+            }
+            catch
+            {
+                other.GetComponent<FlyEnemy>().HpCal(Damage);
+            }
+            Destroy(gameObject);
+        }
+        if(other.CompareTag("GroundEnemy"))
+        {
+            other.GetComponent<Enemy>().HpCal(Damage);
+            Destroy(gameObject);
+        }
+        else if(other.CompareTag("FlyEnemy"))
+        {
+            other.GetComponent<FlyEnemy>().HpCal(Damage);
             Destroy(gameObject);
         }
     }

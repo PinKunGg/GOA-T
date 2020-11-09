@@ -6,18 +6,19 @@ using UnityEngine.UI;
 public class GameMode_Controller : MonoBehaviour
 {
     //Mode Controller
-    public bool b_WaveMode, b_EndlessMode;
+    public bool b_WaveMode, b_EndlessMode, b_PreviewMode;
     bool b_isNextWave, b_preSpawn;
     public Text txt_ModeTxt;
 
     //Spawner Controller
     public GameObject g_EnemyGroundPrefab, g_EnemyFlyPrefab;
     float f_spawnCount = 3f;
-    public float HpPerWave = 0.5f;
+    public float HpPerWave = 5f, CostPerWave = 3f;
     public Transform g_EnemySpawner;
     public bool b_isSpawn;
     GM s_GM;
     DeckCollect s_DC;
+    BuildManager buildManager;
     public static List<GameObject> L_EnemyPrefabSpawn = new List<GameObject>();
 
     //Timer Controller
@@ -25,13 +26,14 @@ public class GameMode_Controller : MonoBehaviour
     float f_ShowTimer;
     public float CurrentWave, FinishWave;
     bool b_isTimer;
-    public Text txt_SpawnTimeTxt, txt_SpawnTimeTxt1, txt_WaveCount;
+    public Text txt_SpawnTimeTxt, txt_WaveCount;
     public GameObject TimerBG;
 
     private void Awake() //GetComponent
     {
         s_GM = GetComponent<GM>();
         s_DC = GetComponent<DeckCollect>();
+        buildManager = GetComponent<BuildManager>();
 
         g_EnemyGroundPrefab.GetComponent<Enemy>().EnemyHp.maxValue = 1f;
         g_EnemyFlyPrefab.GetComponent<FlyEnemy>().EnemyHp.maxValue = 1f;
@@ -44,7 +46,6 @@ public class GameMode_Controller : MonoBehaviour
 
         //Disable SpawnTimeText
         txt_SpawnTimeTxt.gameObject.SetActive(false);
-        txt_SpawnTimeTxt1.gameObject.SetActive(false);
         TimerBG.SetActive(false);
         
         if(b_EndlessMode) //Work Only In Endless Mode
@@ -52,10 +53,14 @@ public class GameMode_Controller : MonoBehaviour
             b_WaveMode = false;
             EndlessMode();
         }
+        else if(b_PreviewMode)
+        {
+            FinishWave = 2f;
+        }
     }
     private void Update()
     {
-        if(CurrentWave == FinishWave && L_EnemyPrefabSpawn.Count == 0f && b_isSpawn == true)
+        if(CurrentWave == FinishWave && L_EnemyPrefabSpawn.Count == 0f && b_isSpawn == true && b_WaveMode == true)
         {
             s_GM.b_isWin = true;
         }
@@ -75,6 +80,11 @@ public class GameMode_Controller : MonoBehaviour
         {
             txt_ModeTxt.text = "Mode : Endless";
             txt_WaveCount.text = "Wave: " + CurrentWave;
+        }
+        else if(b_PreviewMode == true)
+        {
+            txt_ModeTxt.text = "Mode : Preview";
+            txt_WaveCount.text = "Wave: " + CurrentWave + " / " + FinishWave;
         }
 
         //Check ว่ายังมี Enemy ใน Sceen รึเปล่า
@@ -99,7 +109,6 @@ public class GameMode_Controller : MonoBehaviour
                     b_isTimer = true;
                     f_ShowTimer = sf_TimeFix;
                     txt_SpawnTimeTxt.gameObject.SetActive(true);
-                    txt_SpawnTimeTxt1.gameObject.SetActive(true);
                     TimerBG.SetActive(true);
                 }
 
@@ -116,14 +125,12 @@ public class GameMode_Controller : MonoBehaviour
             {
                 f_ShowTimer -= Time.deltaTime;
                 txt_SpawnTimeTxt.text = "Next Wave Spawn in " + Mathf.Round(f_ShowTimer).ToString();
-                txt_SpawnTimeTxt1.text = "Next Wave Spawn in " + Mathf.Round(f_ShowTimer).ToString();
             }
 
             if (f_ShowTimer <= 0) //Do when Timer goto 0
             {
                 //Disable Timer Txt
                 txt_SpawnTimeTxt.gameObject.SetActive(false);
-                txt_SpawnTimeTxt1.gameObject.SetActive(false);
                 TimerBG.SetActive(false);
 
                 if (b_WaveMode) //Wave Mode
@@ -134,7 +141,6 @@ public class GameMode_Controller : MonoBehaviour
                 }
                 else if(b_EndlessMode)//Eneless Mode
                 {
-                    sf_TimeFix += 4f;
                     f_spawnCount += 2f;
                     b_isTimer = false;
                     StartCoroutine(EndlessSpawn());
@@ -152,7 +158,6 @@ public class GameMode_Controller : MonoBehaviour
         b_isNextWave = true;
 
         txt_SpawnTimeTxt.gameObject.SetActive(true);
-        txt_SpawnTimeTxt1.gameObject.SetActive(true);
         TimerBG.SetActive(true);
     }
     public void NextWave() //Start Next Wave
@@ -163,7 +168,6 @@ public class GameMode_Controller : MonoBehaviour
             b_isTimer = true;
             f_ShowTimer = sf_TimeFix;
             txt_SpawnTimeTxt.gameObject.SetActive(true);
-            txt_SpawnTimeTxt1.gameObject.SetActive(true);
             TimerBG.SetActive(true);
         }
     }
@@ -171,16 +175,16 @@ public class GameMode_Controller : MonoBehaviour
     {
         b_isTimer = true;
         b_isNextWave = false;
-        sf_TimeFix = 3f;
+        sf_TimeFix = 7f;
         f_ShowTimer = sf_TimeFix;
         f_spawnCount = 3f;
         txt_SpawnTimeTxt.gameObject.SetActive(true);
-        txt_SpawnTimeTxt1.gameObject.SetActive(true);
         TimerBG.SetActive(true);
     }
 
     IEnumerator WaveSpawn() //Spawn Wave
     {
+        buildManager.ClearPreviewData();
         s_GM.b_PlayTurn = true;
         s_GM.b_PlaneTurn = false;
         CurrentWave++;
@@ -207,14 +211,14 @@ public class GameMode_Controller : MonoBehaviour
         }
         b_isNextWave = true;
 
-        g_EnemyGroundPrefab.GetComponent<Enemy>().EnemyHp.maxValue += HpPerWave;
-        g_EnemyFlyPrefab.GetComponent<FlyEnemy>().EnemyHp.maxValue += HpPerWave;
-        g_EnemyGroundPrefab.GetComponent<Enemy>().EnemyHp.value += HpPerWave;
-        g_EnemyFlyPrefab.GetComponent<FlyEnemy>().EnemyHp.value += HpPerWave;
+        Enemy.MaxHp += HpPerWave;
+        FlyEnemy.MaxHp += HpPerWave;
+        s_GM.CostRegen(CostPerWave);
     }
 
     IEnumerator EndlessSpawn() //Spawn Endless
     {
+        buildManager.ClearPreviewData();
         s_GM.b_PlayTurn = true;
         s_GM.b_PlaneTurn = false;
         CurrentWave++;
@@ -240,9 +244,8 @@ public class GameMode_Controller : MonoBehaviour
             yield break;
         }
 
-        g_EnemyGroundPrefab.GetComponent<Enemy>().EnemyHp.maxValue += HpPerWave;
-        g_EnemyFlyPrefab.GetComponent<FlyEnemy>().EnemyHp.maxValue += HpPerWave;
-        g_EnemyGroundPrefab.GetComponent<Enemy>().EnemyHp.value += HpPerWave;
-        g_EnemyFlyPrefab.GetComponent<FlyEnemy>().EnemyHp.value += HpPerWave;
+        Enemy.MaxHp += HpPerWave;
+        FlyEnemy.MaxHp += HpPerWave;
+        s_GM.CostRegen(CostPerWave);
     }
 }

@@ -31,9 +31,21 @@ public class MenuButton : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
-    public void StageSelect_Endless()
+    public void StageSelect_Stage2()
     {
         SceneManager.LoadScene(3);
+    }
+    public void StageSelect_Stage3()
+    {
+        SceneManager.LoadScene(4);
+    }
+    public void StageSelect_Stage4()
+    {
+        SceneManager.LoadScene(5);
+    }
+    public void StageSelect_Endless()
+    {
+        SceneManager.LoadScene(6);
     }
     public void ResumeButton()
     {

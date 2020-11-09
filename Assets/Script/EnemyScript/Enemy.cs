@@ -7,13 +7,18 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     float f_enemySpeed = 3f;
+    public static float MaxHp = 40f;
     public Slider EnemyHp;
+
+    public float Piority;
 
     Transform trans_target; //Waypoint to go
     int i_waypointIndex = 0;
     static float f_index = 0f; //idex of Enemy Prefab (when Debug)
     void Start() //Set WayPoint to 0
     {
+        EnemyHp.maxValue = MaxHp;
+        EnemyHp.value = MaxHp;
         print("Ground Hp = " +EnemyHp.value);
         trans_target = Waypoint.point[0];
     }
@@ -58,12 +63,8 @@ public class Enemy : MonoBehaviour
         i_waypointIndex++;
         trans_target = Waypoint.point[i_waypointIndex];
     }
-
-    private void OnTriggerEnter(Collider other)
+    public void HpCal(float value)
     {
-        if(other.gameObject.tag == "PBullet")
-        {
-            EnemyHp.value -= 10f * Time.deltaTime;
-        }
+        EnemyHp.value -= value;
     }
 }

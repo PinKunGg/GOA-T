@@ -8,7 +8,7 @@ public class BuildZone : MonoBehaviour
     public Color color_HoverColor;
     Color color_StartColor;
 
-    public Text txt_SystemText, txt_SystemText_S;
+    public Text txt_SystemText;
     GameObject g_cannon;
     public Vector3 v3_CannonOffSet;
 
@@ -22,7 +22,6 @@ public class BuildZone : MonoBehaviour
     {
         render_rend = GetComponent<Renderer>();
         txt_SystemText = GameObject.Find("SystemTxt_T").GetComponent<Text>();
-        txt_SystemText_S = GameObject.Find("SystemTxt_S").GetComponent<Text>();
         s_DC = GameObject.Find("GM").GetComponent<DeckCollect>();
         s_GM = GameObject.Find("GM").GetComponent<GM>();
         s_CardInHand = GameObject.Find("GM").GetComponent<CardInHand>();
@@ -31,7 +30,6 @@ public class BuildZone : MonoBehaviour
     {
         //Set System Text to null
         txt_SystemText.text = "";
-        txt_SystemText_S.text = "";
 
         //Store BuildZone Current Color
         color_StartColor = render_rend.material.color;
@@ -41,7 +39,6 @@ public class BuildZone : MonoBehaviour
         if(g_cannon != null) //Check if there is any cannon on there
         {
             txt_SystemText.text = "Can't Deploy Here";
-            txt_SystemText_S.text = "Can't Deploy Here";
             Invoke("ResetSystemTxt", 4f);
             return;
         }
@@ -49,8 +46,9 @@ public class BuildZone : MonoBehaviour
         {
             bool isBuild = BuildManager.instance.GetIsBuild();
             bool isPause = BuildManager.instance.GetIsPause();
-            if(isBuild == false && isPause == false)
+            if(isBuild == false && isPause == false && (s_GM.BaseCost - BuildManager.instance.GetTurretCost() >= 0))
             {
+                s_GM.CostCal(BuildManager.instance.GetTurretCost());
                 BuildManager.instance.isBuild = true;
                 int CardIndex = BuildManager.instance.GetCardIndex();
                 print("Summon Turret = " + CardIndex);
@@ -61,7 +59,11 @@ public class BuildZone : MonoBehaviour
             else if(isBuild == true && isPause == false)
             {
                 txt_SystemText.text = "Please select a card!";
-                txt_SystemText_S.text = "Please select a card!";
+                Invoke("ResetSystemTxt", 4f);
+            }
+            else if(s_GM.BaseCost <= 0 || s_GM.BaseCost - BuildManager.instance.GetTurretCost() < 0)
+            {
+                txt_SystemText.text = "Not have enought Cost!";
                 Invoke("ResetSystemTxt", 4f);
             }
             else
@@ -72,13 +74,11 @@ public class BuildZone : MonoBehaviour
         else if (s_GM.b_PlayTurn == true) //When it in PlaneTurn can't build
         {
             txt_SystemText.text = "Wait until 'PlanTurn' !";
-            txt_SystemText_S.text = "Wait until 'PlanTurn' !";
             Invoke("ResetSystemTxt", 4f);
         }
         else //Not have any card left in Hand
         {
             txt_SystemText.text = "Not have any card left in Hand!";
-            txt_SystemText_S.text = "Not have any card left in Hand!";
             Invoke("ResetSystemTxt", 4f);
         }
         
@@ -103,6 +103,5 @@ public class BuildZone : MonoBehaviour
     void ResetSystemTxt() //Reset SystemText
     {
         txt_SystemText.text = "";
-        txt_SystemText_S.text = "";
     }
 }

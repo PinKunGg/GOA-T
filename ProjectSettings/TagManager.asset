@@ -10,6 +10,8 @@ TagManager:
   - Turret
   - PBullet
   - PDoubleBullet
+  - GroundEnemy
+  - FlyEnemy
   layers:
   - Default
   - TransparentFX

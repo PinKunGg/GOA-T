@@ -15,3 +15,9 @@ MonoBehaviour:
   Name: Card7
   CardIndex: 7
   Turret: {fileID: 597420402991739408, guid: 363a89af6199ecb439bcaabe4648af77, type: 3}
+  TurretName: Turret 7
+  DetecRange: 4
+  Damage: 9
+  RotateSpeed: 19
+  FireRate: 9
+  Cost: 17

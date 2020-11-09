@@ -7,6 +7,7 @@ public class FlyEnemy : MonoBehaviour
 {
     [SerializeField]
     float f_enemySpeed = 3f;
+    public static float MaxHp = 40f;
     public Slider EnemyHp;
 
 
@@ -15,6 +16,8 @@ public class FlyEnemy : MonoBehaviour
     static float f_index = 0f; //idex of Enemy Prefab (when Debug)
     void Start() //Set WayPoint to 0
     {
+        EnemyHp.maxValue = MaxHp;
+        EnemyHp.value = MaxHp;
         print("Fly Hp = " + EnemyHp.value);
         trans_target = FlyWaypoint.point[0];
     }
@@ -60,11 +63,8 @@ public class FlyEnemy : MonoBehaviour
         trans_target = FlyWaypoint.point[i_waypointIndex];
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void HpCal(float value)
     {
-        if(other.gameObject.tag == "PBullet")
-        {
-            EnemyHp.value -= 10f * Time.deltaTime;
-        }
+        EnemyHp.value -= value;
     }
 }
