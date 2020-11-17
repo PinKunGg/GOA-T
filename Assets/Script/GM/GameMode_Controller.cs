@@ -11,7 +11,7 @@ public class GameMode_Controller : MonoBehaviour
     public Text txt_ModeTxt;
 
     //Spawner Controller
-    public GameObject g_EnemyGroundPrefab, g_EnemyFlyPrefab;
+    public GameObject g_EnemyGroundPrefab, g_EnemyFlyPrefab, g_BossPrefab, BossWarning;
     float f_spawnCount = 3f;
     public float HpPerWave = 5f, CostPerWave = 3f;
     public Transform g_EnemySpawner;
@@ -25,7 +25,7 @@ public class GameMode_Controller : MonoBehaviour
     static float sf_TimeFix = 3f;
     float f_ShowTimer;
     public float CurrentWave, FinishWave;
-    bool b_isTimer;
+    bool b_isTimer, isBossSpawnWarning;
     public Text txt_SpawnTimeTxt, txt_WaveCount;
     public GameObject TimerBG;
 
@@ -42,6 +42,7 @@ public class GameMode_Controller : MonoBehaviour
     }
     private void Start()
     {
+        BossWarning.SetActive(false);
         CurrentWave = 0f;
 
         //Disable SpawnTimeText
@@ -60,7 +61,7 @@ public class GameMode_Controller : MonoBehaviour
     }
     private void Update()
     {
-        if(CurrentWave == FinishWave && L_EnemyPrefabSpawn.Count == 0f && b_isSpawn == true && b_WaveMode == true)
+        if(CurrentWave == FinishWave && L_EnemyPrefabSpawn.Count == 0f && b_isSpawn == true && b_WaveMode == true && s_GM.CurrentHp > 0)
         {
             s_GM.b_isWin = true;
         }
@@ -92,6 +93,11 @@ public class GameMode_Controller : MonoBehaviour
         {
             if(L_EnemyPrefabSpawn.Count == 0f)
             {
+                if(CurrentWave == (FinishWave - 2f) && isBossSpawnWarning == false)
+                {
+                    isBossSpawnWarning = true;
+                    StartCoroutine(BossSpawnWarningMethod());
+                }
                 if(b_WaveMode) //Wave Mode
                 {
                     s_GM.b_PlayTurn = false;
@@ -135,9 +141,17 @@ public class GameMode_Controller : MonoBehaviour
 
                 if (b_WaveMode) //Wave Mode
                 {
-                    f_spawnCount += 2f;
-                    b_isTimer = false;
-                    StartCoroutine(WaveSpawn());
+                    if(CurrentWave == (FinishWave - 2f))
+                    {
+                        b_isTimer = false;
+                        StartCoroutine(SpawnBoss());
+                    }
+                    else
+                    {
+                        f_spawnCount += 2f;
+                        b_isTimer = false;
+                        StartCoroutine(WaveSpawn());
+                    }
                 }
                 else if(b_EndlessMode)//Eneless Mode
                 {
@@ -181,7 +195,25 @@ public class GameMode_Controller : MonoBehaviour
         txt_SpawnTimeTxt.gameObject.SetActive(true);
         TimerBG.SetActive(true);
     }
+    IEnumerator SpawnBoss()
+    {
+        buildManager.ClearPreviewData();
+        s_GM.b_PlayTurn = true;
+        s_GM.b_PlaneTurn = false;
+        CurrentWave++;
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(g_BossPrefab, g_EnemySpawner.position, Quaternion.identity);
 
+        b_isSpawn = true;
+
+        if (b_WaveMode == false)
+        {
+            yield break;
+        }
+
+        b_isNextWave = true;
+        s_GM.CostRegen(CostPerWave);
+    }
     IEnumerator WaveSpawn() //Spawn Wave
     {
         buildManager.ClearPreviewData();
@@ -211,6 +243,7 @@ public class GameMode_Controller : MonoBehaviour
         }
         b_isNextWave = true;
 
+        Enemy.BossHp += HpPerWave;
         Enemy.MaxHp += HpPerWave;
         FlyEnemy.MaxHp += HpPerWave;
         s_GM.CostRegen(CostPerWave);
@@ -247,5 +280,12 @@ public class GameMode_Controller : MonoBehaviour
         Enemy.MaxHp += HpPerWave;
         FlyEnemy.MaxHp += HpPerWave;
         s_GM.CostRegen(CostPerWave);
+    }
+
+    IEnumerator BossSpawnWarningMethod()
+    {
+        BossWarning.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        BossWarning.SetActive(false);
     }
 }

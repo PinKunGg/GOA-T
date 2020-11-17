@@ -25,21 +25,18 @@ public class GM : MonoBehaviour
         WinUI.SetActive(false);
         LoseUI.SetActive(false);
     }
-    private void FixedUpdate()
+    private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape) && b_isWin == false && b_isLose == false)
         {
             b_isEsc = !b_isEsc;
         }
-    }
-    private void Update()
-    {
         if(BaseCost <= 0)
         {            
             BaseCost = 0f;
             Cost.text = BaseCost.ToString();
         }
-        if(CurrentHp <= 0 )
+        if(CurrentHp <= 0)
         {
             b_isLose = true;
         }
@@ -101,6 +98,11 @@ public class GM : MonoBehaviour
     public void BaseHpCal()
     {
         BaseHp.text = (CurrentHp -= 1f) + " / " + FullHp;
+    }
+    public void BaseBossHpCal()
+    {
+        print("BaseBossHpCal = " + Mathf.Round(CurrentHp / 2f));
+        BaseHp.text = (CurrentHp -= Mathf.Round(CurrentHp / 2f)) + " / " + FullHp;
     }
     public void CostRegen(float value)
     {

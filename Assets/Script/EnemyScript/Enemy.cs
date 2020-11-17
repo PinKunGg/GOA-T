@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float f_enemySpeed = 3f;
     public static float MaxHp = 40f;
+    public static float BossHp = 1300;
+    public bool isBoss;
     public Slider EnemyHp;
 
     public float Piority;
@@ -17,16 +19,24 @@ public class Enemy : MonoBehaviour
     static float f_index = 0f; //idex of Enemy Prefab (when Debug)
     void Start() //Set WayPoint to 0
     {
-        EnemyHp.maxValue = MaxHp;
-        EnemyHp.value = MaxHp;
-        print("Ground Hp = " +EnemyHp.value);
+        if(isBoss == false)
+        {
+            EnemyHp.maxValue = MaxHp;
+            EnemyHp.value = MaxHp;
+            print("Ground Hp = " +EnemyHp.value);
+        }
+        else
+        {
+            EnemyHp.maxValue = BossHp;
+            EnemyHp.value = BossHp;
+            print("Ground Hp = " +EnemyHp.value);
+        }
         trans_target = Waypoint.point[0];
     }
 
     private void OnEnable() //Make Enemy Add to GameMode_Controller List to Check if it on Sceen yet?
     {
         f_index++;
-        this.gameObject.name = "Enemy_" + f_index;
         GameMode_Controller.L_EnemyPrefabSpawn.Add(this.gameObject);
     }
 
@@ -38,6 +48,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector3 dir = trans_target.position - transform.position; //Make Path from themself to current WayPoint
+        this.transform.LookAt(trans_target);
 
         transform.Translate(dir.normalized * f_enemySpeed * Time.deltaTime, Space.World); //Make Enemy Walk
 

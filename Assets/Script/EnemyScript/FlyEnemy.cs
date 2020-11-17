@@ -25,7 +25,6 @@ public class FlyEnemy : MonoBehaviour
     private void OnEnable() //Make Enemy Add to GameMode_Controller List to Check if it on Sceen yet?
     {
         f_index++;
-        this.gameObject.name = "Enemy_" + f_index;
         GameMode_Controller.L_EnemyPrefabSpawn.Add(this.gameObject);
     }
 
@@ -37,6 +36,7 @@ public class FlyEnemy : MonoBehaviour
     void Update()
     {
         Vector3 dir = trans_target.position - transform.position; //Make Path from themself to current WayPoint
+        this.transform.LookAt(trans_target);
 
         transform.Translate(dir.normalized * f_enemySpeed * Time.deltaTime, Space.World); //Make Enemy Walk
 
