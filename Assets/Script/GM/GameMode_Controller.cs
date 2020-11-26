@@ -93,7 +93,7 @@ public class GameMode_Controller : MonoBehaviour
         {
             if(L_EnemyPrefabSpawn.Count == 0f)
             {
-                if(CurrentWave == (FinishWave - 2f) && isBossSpawnWarning == false)
+                if(CurrentWave == (FinishWave - 2f) && isBossSpawnWarning == false && b_WaveMode == true)
                 {
                     isBossSpawnWarning = true;
                     StartCoroutine(BossSpawnWarningMethod());

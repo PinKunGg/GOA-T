@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     float f_enemySpeed = 3f;
-    public static float MaxHp = 40f;
-    public static float BossHp = 1300;
+    public static float MaxHp = 20f;
+    public static float BossHp = 1100;
     public bool isBoss;
     public Slider EnemyHp;
 

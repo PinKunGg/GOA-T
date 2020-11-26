@@ -64960,8 +64960,8 @@ MonoBehaviour:
   g_BossPrefab: {fileID: 5187738506042299988, guid: 9ce3d6cf7a0e0f34db43fdb81655190c,
     type: 3}
   BossWarning: {fileID: 1749943107}
-  HpPerWave: 0.2
-  CostPerWave: 3
+  HpPerWave: 10
+  CostPerWave: 15
   g_EnemySpawner: {fileID: 1358495106}
   b_isSpawn: 0
   CurrentWave: 0
