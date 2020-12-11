@@ -7,10 +7,8 @@ Target Platforms: PC, Andriod <br />
 Genere : 3D Tower Defense <br />
 Number of Players: Single Player  <br />
 <br />
-<br />
 :: NSC Status ::  <br />
 รอบที่1 : ไม่ผ่านการคัดเลือก  <br />
-<br />
 <br />
 :: Intro :: <br />
 G.O.A-T นั้นเป็นเกมที่จะนำการเล่นแบบ "เกมการ์ด" มาผสมเข้ากับเกมแนว "Tower Defense" เพื่อทำให้เกิด Game play ใหม่ ๆ  <br />
