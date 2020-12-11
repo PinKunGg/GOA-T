@@ -1,10 +1,10 @@
 # TowerDefense
 NSC 2020 Project
-
-Project Name: Genesis of Arcana-T (G.O.A-T)
-Target Platforms: PC, Andriod
-Genere : 3D Tower Defense
-Number of Players: Single Player
+\n
+Project Name: Genesis of Arcana-T (G.O.A-T) \n
+Target Platforms: PC, Andriod \n
+Genere : 3D Tower Defense \n
+Number of Players: Single Player \n
 
 :: NSC Status ::
 รอบที่1 : ไม่ผ่านการคัดเลือก
